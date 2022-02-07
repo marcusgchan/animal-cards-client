@@ -1,0 +1,24 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4.5rem;
+  padding-top: min(15rem, 15vh);
+}
+
+.mainHeading {
+  font-size: 3rem;
+  color: var(--main-font-clr);
+  letter-spacing: 0.2rem;
+}
+
+.heroText {
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 5rem;
+}

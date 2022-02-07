@@ -1,0 +1,48 @@
+.sectionContainer {
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+  max-width: 100rem;
+  height: 100%;
+  padding: 2rem 0;
+}
+
+.card {
+  min-width: 22rem;
+  min-height: 20rem;
+  padding: 1.5rem;
+  color: var(--main-font-clr);
+  border: 2px solid black;
+  border-radius: 0.8rem;
+}
+
+.controlsContainer {
+  flex: 1 1 50%;
+}
+
+.cardRow {
+  display: flex;
+}
+
+.property {
+  flex: 1 1 30%;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.value {
+  flex: 1 1 70%;
+}
+
+.grid {
+  justify-self: start;
+  display: grid;
+  align-items: center;
+  height: 15rem;
+  vertical-align: top;
+  width: 70%;
+  grid-template-rows: repeat(6, 1fr);
+}

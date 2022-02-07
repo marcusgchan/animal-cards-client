@@ -1,0 +1,75 @@
+.viewSectionContainer {
+  --input-height: 1.5rem;
+  --input-height-offset: 1rem;
+  --container-padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  padding: calc(
+      var(--input-height) + var(--container-padding) +
+        var(--input-height-offset)
+    )
+    var(--container-padding);
+}
+
+.searchContainer {
+  position: absolute;
+  top: calc(-1 * (var(--input-height) + var(--input-height-offset)));
+  left: 0;
+}
+
+.searchInput,
+.serachBtn {
+  display: inline-block;
+  height: var(--input-height);
+}
+
+.searchInput {
+  width: 14rem;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1.5;
+  width: 15rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+}
+
+.cardHeading {
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  width: 100%;
+  justify-items: center;
+}
+
+@media only screen and (max-width: 1371px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1103px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 831px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

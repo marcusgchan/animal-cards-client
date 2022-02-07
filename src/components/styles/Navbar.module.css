@@ -1,0 +1,15 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  padding: 0 1.5rem;
+  min-width: 0;
+  background: var(--nav-bg-clr);
+}
+
+.btnContainer {
+  display: flex;
+  gap: 2rem;
+  min-width: 0;
+}
