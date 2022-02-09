@@ -29,7 +29,7 @@ a {
 label {
   text-transform: uppercase;
   color: var(--main-font-clr);
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.1rem;
 }
 
 input[type="range"] {

@@ -6,7 +6,53 @@
   margin: auto;
   max-width: 100rem;
   height: 100%;
-  padding: 2rem 0;
+  padding: 3rem 0;
+}
+
+.addPropertybtn {
+  cursor: pointer;
+  display: block;
+  border-radius: 50%;
+  width: var(--btn-width);
+  height: var(--btn-width);
+  color: var(--main-font-clr);
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+}
+
+.cardContainer {
+  position: relative;
+}
+
+.modal {
+  position: absolute;
+  height: 10rem;
+  overflow-y: scroll;
+  bottom: 0;
+  left: var(--btn-width);
+  border: 2px solid var(--generate-btn-clr);
+  border-radius: 0.3rem;
+  background: var(--nav-bg-clr);
+}
+
+.modalContainer {
+  --btn-width: 2.5rem;
+  position: relative;
+}
+
+.addPropertyBtn {
+  display: block;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  background: transparent;
+  text-transform: uppercase;
+  border: transparent;
+  cursor: pointer;
+}
+
+.addPropertyBtn:hover {
+  background-color: var(--main-font-clr);
 }
 
 .card {
@@ -23,20 +69,11 @@
 }
 
 .cardRow {
-  display: flex;
+  padding: 1rem;
 }
-
 .property {
-  flex: 1 1 30%;
-  text-align: left;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
+  margin-right: 1rem;
 }
-
-.value {
-  flex: 1 1 70%;
-}
-
 .grid {
   justify-self: start;
   display: grid;
