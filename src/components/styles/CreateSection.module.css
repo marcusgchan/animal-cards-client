@@ -27,8 +27,8 @@
 
 .modal {
   position: absolute;
-  height: 10rem;
-  overflow-y: scroll;
+  min-height: 3rem;
+  min-width: 5rem;
   bottom: 0;
   left: var(--btn-width);
   border: 2px solid var(--generate-btn-clr);
@@ -71,9 +71,11 @@
 .cardRow {
   padding: 1rem;
 }
+
 .property {
   margin-right: 1rem;
 }
+
 .grid {
   justify-self: start;
   display: grid;
@@ -82,4 +84,16 @@
   vertical-align: top;
   width: 70%;
   grid-template-rows: repeat(6, 1fr);
+}
+
+.btn {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #fff;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  background: var(--create-btn-clr);
+  border: transparent;
+  border-radius: 0.5rem;
 }

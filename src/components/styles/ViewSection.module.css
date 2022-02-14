@@ -38,6 +38,12 @@
   width: 15rem;
   border: 2px solid black;
   border-radius: 0.5rem;
+  transition: transform 400ms;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .cardHeading {

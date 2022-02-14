@@ -5,11 +5,11 @@ const OPTIONS = [
   },
   {
     id: 2,
-    option: "animal type",
+    option: "animal_type",
   },
   {
     id: 3,
-    option: "latin name",
+    option: "latin_name",
   },
   {
     id: 4,
@@ -21,11 +21,11 @@ const OPTIONS = [
   },
   {
     id: 6,
-    option: "min weight",
+    option: "min_weight",
   },
   {
     id: 7,
-    option: "max weight",
+    option: "max_weight",
   },
 ];
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import cardServices from "../services/cardServices";
 import styles from "./styles/ViewSection.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ViewSection = () => {
   const [animals, setAnimals] = useState([]);
@@ -9,8 +10,8 @@ const ViewSection = () => {
   const [filteredAnimals, setFilteredAnimals] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/animals")
+    cardServices
+      .getCards()
       .then((res) => {
         setAnimals(res.data);
       })
@@ -38,18 +39,21 @@ const ViewSection = () => {
             Search
           </button>
         </form>
-        {filteredAnimals.map(({ name, id }) => (
-          <Card key={id} text={name} />
+        {filteredAnimals.map(({ name, id, card_color }) => (
+          <Card key={id} id={id} text={name} cardColor={card_color} />
         ))}
       </div>
     </section>
   );
 };
 
-const Card = ({ text }) => {
+const Card = ({ text, cardColor, id }) => {
+  const navigate = useNavigate();
   return (
-    <article className={styles.card}>
-      <h2 className={styles.cardHeading}>{text}</h2>
+    <article className={styles.card} onClick={() => navigate(`/create/${id}`)}>
+      <h2 className={styles.cardHeading} style={{ color: cardColor }}>
+        {text}
+      </h2>
     </article>
   );
 };

@@ -18,7 +18,17 @@ function App() {
             <CreateSection />
           </>
         }
-      />
+      >
+        <Route
+          path=":id"
+          element={
+            <>
+              <Navbar />
+              <CreateSection />
+            </>
+          }
+        ></Route>
+      </Route>
       <Route
         path="generate"
         element={
