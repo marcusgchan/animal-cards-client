@@ -1,12 +1,22 @@
+.container {
+  padding: 0 5rem;
+  max-width: 65rem;
+  margin: auto;
+}
+
 .sectionContainer {
   display: grid;
+  gap: 1rem;
   align-items: start;
-  justify-items: center;
   grid-template-columns: 1fr 1fr;
   margin: auto;
   max-width: 100rem;
   height: 100%;
   padding: 3rem 0;
+}
+
+.modalContainer {
+  margin-top: 2rem;
 }
 
 .addPropertybtn {
@@ -25,20 +35,22 @@
   position: relative;
 }
 
-.modal {
+.menu {
   position: absolute;
   min-height: 3rem;
   min-width: 5rem;
   bottom: 0;
   left: var(--btn-width);
+  z-index: 2;
   border: 2px solid var(--generate-btn-clr);
   border-radius: 0.3rem;
   background: var(--nav-bg-clr);
 }
 
-.modalContainer {
+.menuContainer {
   --btn-width: 2.5rem;
   position: relative;
+  /* overflow: hidden; */
 }
 
 .addPropertyBtn {
@@ -56,16 +68,13 @@
 }
 
 .card {
+  justify-self: flex-start;
   min-width: 22rem;
   min-height: 20rem;
   padding: 1.5rem;
   color: var(--main-font-clr);
   border: 2px solid black;
   border-radius: 0.8rem;
-}
-
-.controlsContainer {
-  flex: 1 1 50%;
 }
 
 .cardRow {
@@ -78,11 +87,12 @@
 
 .grid {
   justify-self: start;
+  justify-content: stretch;
   display: grid;
   align-items: center;
   height: 15rem;
   vertical-align: top;
-  width: 70%;
+  width: 100%;
   grid-template-rows: repeat(6, 1fr);
 }
 
@@ -96,4 +106,13 @@
   background: var(--create-btn-clr);
   border: transparent;
   border-radius: 0.5rem;
+}
+
+.menuBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
 }
