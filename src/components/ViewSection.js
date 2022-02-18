@@ -43,7 +43,7 @@ const ViewSection = () => {
               <Card key={id} id={id} text={name} cardColor={card_color} />
             ))
           ) : (
-            <div className={styles.noResults}>No Results</div>
+            <div className={styles.noResults}></div>
           )}
         </div>
       </div>
