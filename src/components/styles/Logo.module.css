@@ -3,4 +3,10 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--main-font-clr);
+  cursor: pointer;
+  transition: transform 300ms;
+}
+
+.logo:hover {
+  transform: scale(1.1);
 }
