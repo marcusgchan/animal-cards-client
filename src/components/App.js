@@ -46,6 +46,17 @@ function App() {
           </>
         }
       />
+      <Route
+        path="*"
+        element={
+          <>
+            <Navbar />
+            <div style={{ marginTop: "1rem", textAlign: "center" }}>
+              Page not found
+            </div>
+          </>
+        }
+      />
     </Routes>
   );
 }
