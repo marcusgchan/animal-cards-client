@@ -20,14 +20,15 @@ const ViewSection = () => {
 
   useEffect(() => {
     setFilteredAnimals(
-      animals.filter(({ name }) => name.includes(search.toLowerCase()))
+      animals.filter(({ name }) =>
+        name.toLowerCase().includes(search.toLowerCase())
+      )
     );
   }, [search, animals]);
 
   return (
     <section className={styles.viewSectionContainer}>
-      <div className={styles.grid}>
-        {/* Form is a position abolute (not part of stacking context of grid) */}
+      <div className={styles.inputGridContainer}>
         <form className={styles.searchContainer}>
           <input
             className={styles.searchInput}
@@ -35,13 +36,16 @@ const ViewSection = () => {
             onChange={(e) => setSearch(e.target.value)}
             type="search"
           />
-          <button className={styles.serachBtn} type="submit">
-            Search
-          </button>
         </form>
-        {filteredAnimals.map(({ name, id, card_color }) => (
-          <Card key={id} id={id} text={name} cardColor={card_color} />
-        ))}
+        <div className={styles.grid}>
+          {filteredAnimals.length > 0 ? (
+            filteredAnimals.map(({ name, id, card_color }) => (
+              <Card key={id} id={id} text={name} cardColor={card_color} />
+            ))
+          ) : (
+            <div className={styles.noResults}>No Results</div>
+          )}
+        </div>
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-import styles from "./styles/App.module.css";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./Homepage";
 import Navbar from "./Navbar";

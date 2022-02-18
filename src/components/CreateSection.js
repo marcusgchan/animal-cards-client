@@ -1,10 +1,10 @@
-import { useState, useEffect, useRefs } from "react";
+import { useState, useEffect } from "react";
 import styles from "./styles/CreateSection.module.css";
 import OPTIONS from "../options";
 import cardServices from "../services/cardServices";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "./Modal";
-import { v4 as uuidv4 } from "uuid";
+import Button from "./Button";
 
 const HEIGHT_SLIDER_CONFIG = {
   defaultValue: 20,
@@ -24,22 +24,17 @@ const IS_VALID_DEFAULTS = {
   animal_type: true,
   latin_name: true,
   habitat: true,
+  lifespan: true,
   min_weight: true,
   max_weight: true,
 };
 
 const MODAL_TIMER = 3000;
+const DEFAULT_COLOR = "#2a7f62";
 
 const CreateSection = () => {
   const [cardForm, setCardForm] = useState({ name: "" });
-  const [isValid, setIsValid] = useState({
-    name: true,
-    animal_type: true,
-    latin_name: true,
-    habitat: true,
-    min_weight: true,
-    max_weight: true,
-  });
+  const [isValid, setIsValid] = useState({ ...IS_VALID_DEFAULTS });
   const [height, setHeight] = useState(HEIGHT_SLIDER_CONFIG.defaultValue);
   const [width, setWidth] = useState(WIDTH_SLIDER_CONFIG.defaultValue);
   const [color, setColor] = useState("#2a7f62");
@@ -59,7 +54,7 @@ const CreateSection = () => {
         .getCard(urlParams.id)
         .then((res) => {
           const data = res.data;
-          console.log(res);
+
           // Remove properties that aren't displayed in the card
           delete data["id"];
           const savedWidth = data["min_card_width"];
@@ -76,16 +71,30 @@ const CreateSection = () => {
             }
           }
 
-          setHeight(savedHeight);
-          setWidth(savedWidth);
-          setColor(savedColor);
+          setHeight(savedHeight || HEIGHT_SLIDER_CONFIG.defaultValue);
+          setWidth(savedWidth || WIDTH_SLIDER_CONFIG.defaultValue);
+          setColor(savedColor || DEFAULT_COLOR);
           setCardForm(data);
         })
         .catch((err) => {
           navigate("/create");
         });
     }
-  }, [urlParams]);
+  }, [urlParams, navigate]);
+
+  function resetValues() {
+    setHeight(HEIGHT_SLIDER_CONFIG.defaultValue);
+    setWidth(WIDTH_SLIDER_CONFIG.defaultValue);
+    setColor(DEFAULT_COLOR);
+    setCardForm({ name: "" });
+  }
+
+  function removeRow(e, name) {
+    e.preventDefault();
+    const newRows = { ...cardForm };
+    delete newRows[name];
+    setCardForm(newRows);
+  }
 
   function addProperty(e) {
     e.preventDefault();
@@ -105,15 +114,26 @@ const CreateSection = () => {
     setShowPopup((prev) => !prev);
   };
 
-  function submit() {
-    function handleModal(isSuccessful, msg) {
-      setShowModal({ isToggled: true, msg, isSuccessful });
-      setTimeout(
-        () => setShowModal({ isToggled: false, ...showModal }),
-        MODAL_TIMER
-      );
-    }
+  function handleModal(isSuccessful, msg) {
+    setShowModal({ isToggled: true, msg, isSuccessful });
+    setTimeout(() => {
+      setShowModal({ isToggled: false, ...showModal });
+      resetValues();
+    }, MODAL_TIMER);
+  }
 
+  function deleteCard() {
+    if (urlParams.id) {
+      cardServices
+        .deleteCard(urlParams.id)
+        .then((res) => navigate("/view"))
+        .catch((err) =>
+          handleModal(false, `Unable to delete ${cardForm.name}`)
+        );
+    }
+  }
+
+  function submit() {
     function isValidString(val) {
       return val.length > 0 ? true : false;
     }
@@ -129,6 +149,7 @@ const CreateSection = () => {
     function validateInput() {
       const updatedIsValid = { ...IS_VALID_DEFAULTS };
       let isValid = true;
+
       for (const [key, value] of Object.entries(cardForm)) {
         if (
           OPTIONS.find(({ option }) => option === key).type === "string" &&
@@ -143,6 +164,12 @@ const CreateSection = () => {
           updatedIsValid[key] = false;
           isValid = false;
         }
+      }
+
+      // Check if string is an empty string
+      if (cardForm.name.trim() === "") {
+        isValid = false;
+        updatedIsValid.name = false;
       }
 
       setIsValid(updatedIsValid);
@@ -160,9 +187,9 @@ const CreateSection = () => {
       if (urlParams.id) {
         cardServices
           .modifyCard(urlParams.id, card)
-          .then((res) =>
-            handleModal(true, `Successfully modifed ${res.data.name}`)
-          )
+          .then((res) => {
+            handleModal(true, `Successfully modifed ${cardForm.name}`);
+          })
           .catch((err) =>
             handleModal(false, `Error! Unable to modify ${cardForm.name}`)
           );
@@ -170,7 +197,7 @@ const CreateSection = () => {
         cardServices
           .addCard(card)
           .then((res) =>
-            handleModal(true, `Successfully added ${res.data.name}`)
+            handleModal(true, `Successfully added ${cardForm.name}`)
           )
           .catch((err) => handleModal(false, `Unable to add ${cardForm.name}`));
       }
@@ -195,6 +222,7 @@ const CreateSection = () => {
           width={width}
           color={color}
           isValid={isValid}
+          removeRow={removeRow}
         />
         <Controls
           height={height}
@@ -204,6 +232,8 @@ const CreateSection = () => {
           color={color}
           setColor={setColor}
           submit={submit}
+          urlParams={urlParams}
+          deleteCard={deleteCard}
         />
       </div>
     </section>
@@ -218,6 +248,8 @@ const Controls = ({
   color,
   setColor,
   submit,
+  urlParams,
+  deleteCard,
 }) => {
   return (
     <div className={styles.grid}>
@@ -245,9 +277,20 @@ const Controls = ({
         value={color}
         onChange={(e) => setColor(e.target.value)}
       />
-      <button className={styles.btn} onClick={submit}>
-        add to database
-      </button>
+      <div className={styles.equalColumns}>
+        <Button
+          text={urlParams.id ? "modify card" : "add card"}
+          className="createBtn"
+          onClick={submit}
+        />
+        {urlParams.id && (
+          <Button
+            text="delete card"
+            className="generateBtn"
+            onClick={deleteCard}
+          />
+        )}
+      </div>
     </div>
   );
 };
@@ -262,6 +305,7 @@ const Card = ({
   width,
   color,
   isValid,
+  removeRow,
 }) => {
   function displayRows() {
     const rows = [];
@@ -274,6 +318,7 @@ const Card = ({
           cardForm={cardForm}
           color={color}
           isValid={isValid}
+          removeRow={removeRow}
         />
       );
     }
@@ -297,7 +342,14 @@ const Card = ({
   );
 };
 
-const CardRow = ({ property, handleFormInput, cardForm, color, isValid }) => {
+const CardRow = ({
+  property,
+  handleFormInput,
+  cardForm,
+  color,
+  isValid,
+  removeRow,
+}) => {
   return (
     <div className={styles.cardRow}>
       <label className={styles.property} style={{ color: color }}>
@@ -310,6 +362,14 @@ const CardRow = ({ property, handleFormInput, cardForm, color, isValid }) => {
         value={cardForm[property]}
         style={{ boxShadow: isValid[property] ? "" : "0 0 0.3rem red" }}
       />
+      {property !== "name" && (
+        <button
+          className={styles.removeBtn}
+          onClick={(e) => removeRow(e, property)}
+        >
+          -
+        </button>
+      )}
     </div>
   );
 };

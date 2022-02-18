@@ -81,12 +81,28 @@
   padding: 1rem;
 }
 
+.removeBtn {
+  position: relative;
+  transform: translateY(-0.1rem);
+  aspect-ratio: 1;
+  width: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  transform: scale(1.5) translateY(-0.1rem);
+}
+
 .property {
   margin-right: 1rem;
 }
 
 .grid {
   justify-self: start;
+  gap: 1rem;
+  /* width: min-content; */
   justify-content: stretch;
   display: grid;
   align-items: center;
@@ -115,4 +131,19 @@
   z-index: 1;
   width: 100vw;
   height: 100vh;
+}
+
+.equalColumns {
+  display: flex;
+  gap: 1rem;
+}
+
+.equalColumns > * {
+  flex-basis: 100%;
+}
+
+.value {
+  border: 1px solid black;
+  padding: 0 0.2rem;
+  letter-spacing: 0.05rem;
 }

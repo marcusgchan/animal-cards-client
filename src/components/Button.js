@@ -1,14 +1,9 @@
 import React from "react";
 import styles from "./styles/Button.module.css";
-import { useNavigate } from "react-router-dom";
 
-const Button = ({ text, className }) => {
-  const navigate = useNavigate();
+const Button = ({ text, className, onClick }) => {
   return (
-    <button
-      onClick={() => navigate(`/${text}`)}
-      className={`${className} ${styles.btn}`}
-    >
+    <button onClick={onClick} className={`${className} ${styles.btn}`}>
       {text}
     </button>
   );
